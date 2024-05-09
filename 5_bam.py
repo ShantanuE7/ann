@@ -42,13 +42,9 @@ circle = np.array([[0, 1, 1, 1, 0],
                    [1, 1, 1, 1, 1],
                    [0, 1, 1, 1, 0]])
 
-triangle = np.array([[0, 0, 1, 0, 0],
-                     [0, 1, 0, 1, 0],
-                     [1, 0, 0, 0, 1],
-                     [0, 1, 0, 1, 0],
-                     [0, 0, 1, 0, 0]])
 
-input_patterns = np.array([square.flatten(), circle.flatten(), triangle.flatten()])
+
+input_patterns = np.array([square.flatten(), circle.flatten()])
 
 # Define output patterns (labels)
 output_patterns = np.array([[1, -1, -1], [-1, 1, -1], [-1, -1, 1]])  # 1 for square, 1 for circle, 1 for triangle
@@ -56,3 +52,16 @@ output_patterns = np.array([[1, -1, -1], [-1, 1, -1], [-1, -1, 1]])  # 1 for squ
 bam = BAM(input_size=input_patterns.shape[1], output_size=output_patterns.shape[1])
 bam.train(input_patterns, output_patterns)
 
+
+# Test recall with a new shape (e.g., diamond)
+test = np.array([[1, 1, 1, 1, 1],
+                   [1, 0, 0, 0, 1],
+                   [1, 0, 0, 0, 1],
+                   [1, 0, 0, 0, 1],
+                   [1, 1, 1, 1, 1]])
+
+test_input = test.flatten()
+retrieved_output = bam.recall(test_input)
+print("Test Input :")
+print(test)
+print("Retrieved Output (Label):", retrieved_output.ravel())
